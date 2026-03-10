@@ -1,0 +1,56 @@
+name: Release Murmure
+on:
+    workflow_dispatch:
+        inputs:
+            target:
+                description: 'Target system to build'
+                required: false
+                default: 'all'
+                type: choice
+                options:
+                    - all
+                    - linux
+                    - windows
+                    - macos
+                    - macos-intel
+jobs:
+    linux:
+        if: ${{ !github.event.inputs.target || github.event.inputs.target == 'all' || github.event.inputs.target == 'linux' }}
+        uses: ./.github/workflows/build-linux.yml
+        secrets:
+            TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+            TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+    windows:
+        if: ${{ !github.event.inputs.target || github.event.inputs.target == 'all' || github.event.inputs.target == 'windows' }}
+        uses: ./.github/workflows/build-windows.yml
+        secrets:
+            TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+            TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+            SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+            SIGNPATH_ORG_ID: ${{ secrets.SIGNPATH_ORG_ID }}
+            SIGNPATH_PROJECT_SLUG: ${{ secrets.SIGNPATH_PROJECT_SLUG }}
+            SIGNPATH_POLICY_SLUG: ${{ secrets.SIGNPATH_POLICY_SLUG }}
+    macos:
+        if: ${{ !github.event.inputs.target || github.event.inputs.target == 'all' || github.event.inputs.target == 'macos' }}
+        uses: ./.github/workflows/build-macos.yml
+        secrets:
+            TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+            TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+            MACOS_CODESIGN_P12_B64: ${{ secrets.MACOS_CODESIGN_P12_B64 }}
+            CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
+            MACOS_CODESIGN_IDENTITY: ${{ secrets.MACOS_CODESIGN_IDENTITY }}
+            APPLE_ID: ${{ secrets.APPLE_ID }}
+            APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+            APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+    macos-intel:
+        if: ${{ !github.event.inputs.target || github.event.inputs.target == 'all' || github.event.inputs.target == 'macos-intel' }}
+        uses: ./.github/workflows/build-macos-intel.yml
+        secrets:
+            TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+            TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+            MACOS_CODESIGN_P12_B64: ${{ secrets.MACOS_CODESIGN_P12_B64 }}
+            CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
+            MACOS_CODESIGN_IDENTITY: ${{ secrets.MACOS_CODESIGN_IDENTITY }}
+            APPLE_ID: ${{ secrets.APPLE_ID }}
+            APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+            APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}

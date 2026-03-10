@@ -1,0 +1,141 @@
+name: build-windows
+on:
+    workflow_call:
+        inputs:
+            dry:
+                default: false
+                description: Prevent signing and upload
+                required: false
+                type: boolean
+        secrets:
+            TAURI_PRIVATE_KEY:
+                required: false
+            TAURI_KEY_PASSWORD:
+                required: false
+            SIGNPATH_API_TOKEN:
+                required: false
+            SIGNPATH_ORG_ID:
+                required: false
+            SIGNPATH_PROJECT_SLUG:
+                required: false
+            SIGNPATH_POLICY_SLUG:
+                required: false
+
+permissions:
+    contents: read
+
+jobs:
+    build-windows:
+        runs-on: windows-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+
+            - uses: dtolnay/rust-toolchain@4be9e76fd7c4901c61fb841f559994984270fce7
+
+            - uses: swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5
+              with:
+                  workspaces: './src-tauri -> target'
+
+            - name: Install pnpm
+              run: npm install -g pnpm
+              shell: pwsh
+
+            - name: Download & extract ONNX model (Windows)
+              if: ${{ inputs.dry == false }}
+              shell: pwsh
+              run: |
+                  New-Item -ItemType Directory -Force -Path resources | Out-Null
+                  $url = "https://github.com/Kieirra/murmure-model/releases/download/1.0.0/parakeet-tdt-0.6b-v3-int8.zip"
+                  $zip = Join-Path $env:RUNNER_TEMP "model.zip"
+                  Write-Host "Downloading $url"
+                  Invoke-WebRequest -Uri $url -OutFile $zip
+                  Write-Host "Expanding into .\resources"
+                  Expand-Archive -Path $zip -DestinationPath resources -Force
+                  Get-ChildItem .\resources -Recurse | Select-Object FullName, Length
+
+            - name: Install frontend deps
+              run: pnpm install
+              shell: pwsh
+
+            - name: Build
+              run: pnpm tauri build ${{ inputs.dry && '--no-bundle' || '' }}
+              shell: pwsh
+
+            - name: Prepare unsigned artifacts
+              if: ${{ inputs.dry == false }}
+              shell: pwsh
+              run: |
+                  New-Item -ItemType Directory -Force -Path "unsigned_artifacts" | Out-Null
+                  $msi = Get-ChildItem -Path "src-tauri/target/release/bundle/msi" -Filter *.msi | Select-Object -First 1
+                  Copy-Item $msi.FullName -Destination "unsigned_artifacts/Murmure_x64.msi"
+                  $exe = Get-ChildItem -Path "src-tauri/target/release/bundle/nsis" -Filter *.exe | Select-Object -First 1
+                  Copy-Item $exe.FullName -Destination "unsigned_artifacts/Murmure_x64-setup.exe"
+
+            - name: Upload unsigned artifact
+              if: ${{ inputs.dry == false }}
+              id: upload-unsigned-artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: unsigned-binaries
+                  path: unsigned_artifacts
+                  retention-days: 1
+                  if-no-files-found: error
+
+            - name: SignPath Sign
+              if: ${{ inputs.dry == false }}
+              uses: signpath/github-action-submit-signing-request@v2
+              with:
+                  api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
+                  organization-id: '${{ secrets.SIGNPATH_ORG_ID }}'
+                  project-slug: '${{ secrets.SIGNPATH_PROJECT_SLUG }}'
+                  signing-policy-slug: '${{ secrets.SIGNPATH_POLICY_SLUG }}'
+                  github-artifact-id: '${{ steps.upload-unsigned-artifact.outputs.artifact-id }}'
+                  wait-for-completion: true
+                  output-artifact-directory: 'signed_artifacts'
+
+            - name: Restore Tauri signing key
+              if: ${{ inputs.dry == false }}
+              env:
+                  TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+              run: |
+                  [System.IO.File]::WriteAllBytes("tauri.key", [Convert]::FromBase64String($env:TAURI_PRIVATE_KEY))
+              shell: pwsh
+
+            - name: Sign & Package
+              if: ${{ inputs.dry == false }}
+              env:
+                  TAURI_PRIVATE_KEY_PATH: tauri.key
+                  TAURI_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+              shell: pwsh
+              run: |
+                  $releaseDir = "release-bundle"
+                  if (Test-Path $releaseDir) { Remove-Item $releaseDir -Recurse -Force }
+                  New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
+
+                  # MSI
+                  $msi = Get-ChildItem -Path "signed_artifacts" -Filter *.msi | Select-Object -First 1
+                  if ($msi) {
+                      $finalMsi = Join-Path $releaseDir "Murmure_x64.msi"
+                      Copy-Item $msi.FullName -Destination $finalMsi -Force
+                      pnpm tauri signer sign $finalMsi
+                  }
+
+                  # EXE
+                  $exe = Get-ChildItem -Path "signed_artifacts" -Filter *.exe | Select-Object -First 1
+                  if ($exe) {
+                      $finalExe = Join-Path $releaseDir "Murmure_x64-setup.exe"
+                      Copy-Item $exe.FullName -Destination $finalExe -Force
+                      pnpm tauri signer sign $finalExe
+                  }
+
+            - name: Upload artifact (1 day)
+              if: ${{ inputs.dry == false }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: murmure-windows-x64
+                  path: release-bundle
+                  retention-days: 1
