@@ -2,10 +2,17 @@ import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { useState, useEffect } from 'react';
 
+interface HistoryBlockSnapshot {
+    speaker: string;
+    text: string;
+}
+
 interface HistoryEntry {
     id: number;
     timestamp: number;
     text: string;
+    blocks?: HistoryBlockSnapshot[];
+    speakers?: string[];
 }
 
 export const useHistoryState = () => {

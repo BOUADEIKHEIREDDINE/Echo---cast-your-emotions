@@ -149,6 +149,17 @@ async fn dispatch_to_llm(
     result
 }
 
+/// Run a prompt against the currently active LLM Connect mode.
+///
+/// Reuses the same routing logic and configuration as other LLM features.
+pub async fn run_llm_with_active_mode(
+    app: &AppHandle,
+    prompt: &str,
+) -> Result<String, String> {
+    let settings = load_llm_connect_settings(app);
+    dispatch_to_llm(app, &settings, prompt).await
+}
+
 pub async fn post_process_with_llm(
     app: &AppHandle,
     transcription: String,

@@ -1,4 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
+import { useNavigate } from '@tanstack/react-router';
 import { Typography } from '@/components/typography';
 import { Button } from '@/components/button';
 import {
@@ -21,6 +22,7 @@ import { useTranslation } from '@/i18n';
 export const History = () => {
     const { history } = useHistoryState();
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const handleClearHistory = async () => {
         try {
@@ -94,18 +96,42 @@ export const History = () => {
                         <button
                             key={entry.id}
                             className="w-full text-left rounded-md border border-border p-3 hover:bg-accent cursor-pointer"
-                            onClick={async () => {
+                            onClick={() => {
                                 if (!entry.text) return;
-                                try {
-                                    await navigator.clipboard.writeText(
-                                        entry.text
-                                    );
-                                    toast.info(t('Copied to clipboard'), {
-                                        autoClose: 1500,
+
+                                // If we have a full snapshot (from Transcript Editor),
+                                // restore blocks/speakers exactly as they were.
+                                if (entry.blocks && entry.blocks.length > 0 && entry.speakers) {
+                                    navigate({
+                                        to: '/transcript-editor',
+                                        state: {
+                                            originalAudioPath: undefined,
+                                            blocks: entry.blocks.map((b, idx) => ({
+                                                id: `${entry.id}-${idx}`,
+                                                speaker: b.speaker,
+                                                text: b.text,
+                                            })),
+                                            speakers: entry.speakers,
+                                        } as never,
                                     });
-                                } catch {
-                                    toast.error(t('Failed to copy'));
+                                    return;
                                 }
+
+                                // Fallback: single Speaker 1 block with the text.
+                                navigate({
+                                    to: '/transcript-editor',
+                                    state: {
+                                        originalAudioPath: undefined,
+                                        blocks: [
+                                            {
+                                                id: String(entry.id),
+                                                speaker: 'Speaker 1',
+                                                text: entry.text,
+                                            },
+                                        ],
+                                        speakers: ['Speaker 1'],
+                                    } as never,
+                                });
                             }}
                         >
                             <div className="flex items-start justify-between gap-3">
@@ -114,6 +140,11 @@ export const History = () => {
                                         <span className="italic text-xs">
                                             {t('(Empty transcription)')}
                                         </span>
+                                    ) : entry.text.length > 400 ? (
+                                        <>
+                                            {entry.text.slice(0, 400)}
+                                            {'…'}
+                                        </>
                                     ) : (
                                         entry.text
                                     )}

@@ -7,7 +7,7 @@ use tauri::{AppHandle, Emitter, Manager};
 
 const MAX_HISTORY_ENTRIES: usize = 5;
 
-use super::types::{HistoryData, HistoryEntry};
+use super::types::{HistoryBlockSnapshot, HistoryData, HistoryEntry};
 
 fn get_history_file_path(app: &AppHandle) -> Result<PathBuf> {
     let app_data_dir = app.path().app_data_dir()?;
@@ -67,6 +67,13 @@ pub fn add_transcription(app: &AppHandle, text: String) -> Result<()> {
         }
     };
 
+    // Avoid duplicating identical consecutive entries.
+    if let Some(first) = data.entries.first() {
+        if first.text == text {
+            return Ok(());
+        }
+    }
+
     let timestamp = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)?
         .as_secs() as i64;
@@ -75,6 +82,63 @@ pub fn add_transcription(app: &AppHandle, text: String) -> Result<()> {
         id: data.next_id,
         timestamp,
         text,
+        blocks: None,
+        speakers: None,
+    };
+
+    data.entries.insert(0, entry);
+    data.next_id += 1;
+
+    if data.entries.len() > MAX_HISTORY_ENTRIES {
+        data.entries.truncate(MAX_HISTORY_ENTRIES);
+    }
+
+    if is_persist_enabled(app) {
+        write_history(app, &data)?;
+    } else if let Ok(mut guard) = memory_data().lock() {
+        *guard = data.clone();
+    }
+
+    let _ = app.emit("history-updated", ());
+
+    crate::onboarding::onboarding::mark_onboarding_on_history_write(app);
+
+    Ok(())
+}
+
+/// Adds a transcription plus an optional snapshot of blocks/speakers
+/// (used by the Transcript Editor flow).
+pub fn add_transcription_with_snapshot(
+    app: &AppHandle,
+    text: String,
+    blocks: Vec<HistoryBlockSnapshot>,
+    speakers: Vec<String>,
+) -> Result<()> {
+    let mut data = if is_persist_enabled(app) {
+        read_history(app)?
+    } else {
+        match memory_data().lock() {
+            Ok(d) => d.clone(),
+            Err(_) => HistoryData::default(),
+        }
+    };
+
+    if let Some(first) = data.entries.first() {
+        if first.text == text {
+            return Ok(());
+        }
+    }
+
+    let timestamp = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)?
+        .as_secs() as i64;
+
+    let entry = HistoryEntry {
+        id: data.next_id,
+        timestamp,
+        text,
+        blocks: Some(blocks),
+        speakers: Some(speakers),
     };
 
     data.entries.insert(0, entry);
