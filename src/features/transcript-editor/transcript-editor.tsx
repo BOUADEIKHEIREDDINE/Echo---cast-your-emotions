@@ -28,6 +28,12 @@ export const TranscriptEditor = ({
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
   const [editText, setEditText] = useState('');
 
+  const hasCitation = (text: string) => {
+    // Basic local heuristic: detect common quotation marks.
+    // Keeps everything offline and fast; can be refined later.
+    return /["“”'‘’]|«|»/.test(text);
+  };
+
   const stats = useMemo(() => {
     const totalChars = blocks.reduce((sum, b) => sum + b.text.length, 0);
     const totalWords = blocks.reduce(
@@ -94,17 +100,25 @@ export const TranscriptEditor = ({
                   className="flex gap-4 p-4 rounded-lg border border-border bg-card hover:bg-muted/50 transition-colors"
                 >
                   {/* Speaker Selector */}
-                  <select
-                    value={block.speaker}
-                    onChange={(e) => onSpeakerChange(block.id, e.target.value)}
-                    className="w-32 px-3 py-2 rounded-md border border-input bg-background text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                  >
-                    {speakers.map((speaker) => (
-                      <option key={speaker} value={speaker}>
-                        {speaker}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="w-32 shrink-0 space-y-2">
+                    <select
+                      value={block.speaker}
+                      onChange={(e) => onSpeakerChange(block.id, e.target.value)}
+                      className="w-full px-3 py-2 rounded-md border border-input bg-background text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      {speakers.map((speaker) => (
+                        <option key={speaker} value={speaker}>
+                          {speaker}
+                        </option>
+                      ))}
+                    </select>
+
+                    {hasCitation(block.text) ? (
+                      <div className="inline-flex items-center rounded-full border border-border bg-muted/40 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                        Citation
+                      </div>
+                    ) : null}
+                  </div>
 
                   {/* Text Editor */}
                   {editingBlockId === block.id ? (

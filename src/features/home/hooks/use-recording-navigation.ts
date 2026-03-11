@@ -21,11 +21,13 @@ export const useRecordingNavigation = () => {
             const { audioPath } = event.payload;
             navigate({
               to: '/transcript-editor',
+              // Cast required because TanStack Router infers a
+              // stricter state updater type for this route.
               state: {
                 originalAudioPath: audioPath,
                 blocks: [],
                 speakers: ['Speaker 1'],
-              },
+              } as never,
             });
           }
         );

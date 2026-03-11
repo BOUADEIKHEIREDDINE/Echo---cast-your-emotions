@@ -1,13 +1,13 @@
 use crate::audio::helpers::read_wav_samples;
 use crate::audio::silence_detection::detect_speaker_turns;
 use crate::audio::types::AudioState;
+use crate::engine::transcription_engine::TranscriptionEngine;
 use crate::engine::ParakeetModelParams;
 use crate::{engine::ParakeetEngine, model::Model};
-use anyhow::Context;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 use std::sync::Arc;
-use tauri::{command, AppHandle, State};
+use tauri::{command, AppHandle, Manager};
 use uuid::Uuid;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

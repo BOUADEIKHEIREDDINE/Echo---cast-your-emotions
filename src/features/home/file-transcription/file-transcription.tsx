@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { invoke } from '@tauri-apps/api/core';
+import { useNavigate } from '@tanstack/react-router';
 import { open } from '@tauri-apps/plugin-dialog';
 import { Upload } from 'lucide-react';
 import { Button } from '@/components/button';
@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 
 export const FileTranscription = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const [isTranscribing, setIsTranscribing] = useState(false);
 
     const handleSelectFile = async () => {
@@ -25,15 +26,19 @@ export const FileTranscription = () => {
 
             if (!selected) return;
 
+            const filePath = Array.isArray(selected) ? selected[0] : selected;
+            if (!filePath) return;
+
             setIsTranscribing(true);
 
-            await invoke<string>('transcribe_audio_file', {
-                filePath: selected,
+            navigate({
+                to: '/transcript-editor',
+                state: {
+                    originalAudioPath: filePath,
+                    blocks: [],
+                    speakers: ['Speaker 1'],
+                } as never,
             });
-
-            toast.success(
-                t('File transcription completed and pasted into the active window.')
-            );
         } catch {
             toast.error(t('Failed to transcribe audio file.'));
         } finally {

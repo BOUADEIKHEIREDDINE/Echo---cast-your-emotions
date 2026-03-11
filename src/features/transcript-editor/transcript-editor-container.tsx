@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from '@tanstack/react-router';
 import { TranscriptEditor } from './transcript-editor';
 import { useTranscriptProcessor } from './hooks';
@@ -8,10 +8,12 @@ export const TranscriptEditorContainer = () => {
   const location = useLocation();
 
   // Get initial state from navigation
-  const initialState: TranscriptEditorState = (location.state as any) || {
-    blocks: [],
-    speakers: ['Speaker 1'],
-    originalAudioPath: undefined,
+  const navigationState = (location.state ?? {}) as Partial<TranscriptEditorState>;
+
+  const initialState: TranscriptEditorState = {
+    blocks: navigationState.blocks ?? [],
+    speakers: navigationState.speakers ?? ['Speaker 1'],
+    originalAudioPath: navigationState.originalAudioPath,
   };
 
   const [blocks, setBlocks] = useState<TranscriptBlock[]>(initialState.blocks);

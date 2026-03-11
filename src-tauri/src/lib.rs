@@ -269,7 +269,8 @@ pub fn run() {
             get_auto_enter_after_wake_word,
             set_auto_enter_after_wake_word,
             transcribe_audio_file,
-            toggle_standard_recording_from_ui
+            toggle_standard_recording_from_ui,
+            process_audio_with_speaker_detection
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
