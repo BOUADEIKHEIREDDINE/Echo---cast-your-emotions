@@ -12,11 +12,15 @@ import { Onboarding } from '../onboarding/onboarding';
 import { RecordLabel } from '@/components/record-label';
 import { MicDisconnectedBanner } from './mic-disconnected-banner/mic-disconnected-banner';
 import { FileTranscription } from './file-transcription/file-transcription';
+import { useRecordingNavigation } from './hooks/use-recording-navigation';
 
 export const Home = () => {
     const { shortcut: recordShortcut } = useShortcut(SHORTCUT_CONFIGS.record);
-
     const { t } = useTranslation();
+
+    // Setup listener for recording completion and navigate to editor
+    useRecordingNavigation();
+
     return (
         <main className="space-y-4 relative">
             <Page.Header>
@@ -68,4 +72,3 @@ export const Home = () => {
         </main>
     );
 };
-

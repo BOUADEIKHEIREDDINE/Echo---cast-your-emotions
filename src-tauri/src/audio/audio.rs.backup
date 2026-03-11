@@ -123,27 +123,19 @@ pub fn stop_recording(app: &AppHandle) -> Option<std::path::PathBuf> {
                 p.display()
             );
 
-            // Emit event for transcript editor (Standard mode uses editor)
-            let recording_mode = state.get_recording_mode();
-            let audio_path_string = p.to_string_lossy().to_string();
-            let _ = app.emit("recording-complete", serde_json::json!({ "audioPath": audio_path_string }));
-
-            // For Standard recordings, skip processing - user will edit in transcript editor
-            // For other modes, process immediately (LLM, Command)
-            if recording_mode != crate::audio::types::RecordingMode::Standard {
-                match process_recording(app, p) {
-                    Ok(final_text) => {
-                        let text = match state.strip_word.lock().take() {
-                            Some(word) => strip_trailing_wake_word(&final_text,  &word),
-                            None => final_text,
-                        };
-                        if let Err(e) = write_transcription(app, &text) {
-                            error!("Failed to use clipboard: {}", e);
-                        }
+            // Process recording (Transcribe -> LLM -> History)
+            match process_recording(app, p) {
+                Ok(final_text) => {
+                    let text = match state.strip_word.lock().take() {
+                        Some(word) => strip_trailing_wake_word(&final_text, &word),
+                        None => final_text,
+                    };
+                    if let Err(e) = write_transcription(app, &text) {
+                        error!("Failed to use clipboard: {}", e);
                     }
-                    Err(e) => {
-                        error!("Processing failed: {}", e);
-                    }
+                }
+                Err(e) => {
+                    error!("Processing failed: {}", e);
                 }
             }
         }

@@ -13,6 +13,7 @@ import { FormattingRules } from './features/settings/formatting-rules/formatting
 import { System } from './features/settings/system/system';
 import { LLMConnect } from './features/llm-connect/llm-connect';
 import { VoiceMode } from './features/voice-mode/voice-mode';
+import { TranscriptEditorContainer } from './features/transcript-editor';
 
 const rootRoute = createRootRoute({
     component: () => <Layout />,
@@ -22,6 +23,12 @@ const indexRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/',
     component: Home,
+});
+
+const transcriptEditorRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/transcript-editor',
+    component: TranscriptEditorContainer,
 });
 
 const settingsShortcutsRoute = createRoute({
@@ -80,6 +87,7 @@ const aboutRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
     indexRoute,
+    transcriptEditorRoute,
     settingsIndexRoute,
     settingsShortcutsRoute,
     settingsSystemRoute,

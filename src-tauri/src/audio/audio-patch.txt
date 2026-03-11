@@ -1,0 +1,21 @@
+Find the stop_recording function and AFTER the line:
+    info!(
+        "Audio recording stopped; file written to temporary path: {}",
+        p.display()
+    );
+
+Add:
+    // Emit event for transcript editor
+    let audio_path_string = p.to_string_lossy().to_string();
+    let _ = app.emit("recording-complete", serde_json::json!({ "audioPath": audio_path_string }));
+
+Then REPLACE the block:
+            // Process recording (Transcribe -> LLM -> History)
+            match process_recording(app, p) {
+                
+WITH the newer version that only processes for non-Standard recordings:
+            // Only process immediately for LLM/Command modes, Standard goes to editor
+            let state_check = app.state::<AudioState>();
+            if state_check.get_recording_mode() != crate::audio::types::RecordingMode::Standard {
+                // Process recording (Transcribe -> LLM -> History)
+                match process_recording(app, p) {
