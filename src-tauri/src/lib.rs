@@ -268,7 +268,8 @@ pub fn run() {
             set_wake_word_validate,
             get_auto_enter_after_wake_word,
             set_auto_enter_after_wake_word,
-            transcribe_audio_file
+            transcribe_audio_file,
+            toggle_standard_recording_from_ui
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -46,7 +46,12 @@ export const CustomDictionary = () => {
                     autoClose: 1500,
                 })
             )
-            .catch(() => toast.error(t('Failed to update dictionary')));
+            .catch((error) => {
+                console.error('Set dictionary error:', error);
+                toast.error(
+                    `${t('Failed to update dictionary')} : ${String(error)}`
+                );
+            });
     };
 
     const isValidWord = (word: string): boolean => {

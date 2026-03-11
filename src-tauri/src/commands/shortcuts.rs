@@ -1,7 +1,10 @@
 use crate::settings;
-use crate::shortcuts::types::{recording_state, RecordingSource};
+use crate::shortcuts::types::{recording_state, KeyEventType, RecordingSource};
 use crate::shortcuts::ShortcutState;
-use crate::shortcuts::{keys_to_string, parse_binding_keys, ShortcutAction, ShortcutRegistryState};
+use crate::shortcuts::{
+    handle_shortcut_event, keys_to_string, parse_binding_keys, ActivationMode, ShortcutAction,
+    ShortcutRegistryState,
+};
 use tauri::{command, AppHandle, Manager};
 
 // ============================================================================
@@ -122,6 +125,23 @@ pub fn set_command_shortcut(app: AppHandle, binding: String) -> Result<String, S
         .update_binding(ShortcutAction::StartRecordingCommand, keys);
 
     Ok(normalized)
+}
+
+// ============================================================================
+// Cancel Recording Shortcut
+// ============================================================================
+
+// Toggle standard recording from the Home UI button.
+// This uses the same logic as a Toggle-to-talk shortcut:
+// first click starts recording, second click stops.
+#[command]
+pub fn toggle_standard_recording_from_ui(app: AppHandle) {
+    handle_shortcut_event(
+        &app,
+        &ShortcutAction::StartRecording,
+        &ActivationMode::ToggleToTalk,
+        KeyEventType::Released,
+    );
 }
 
 // ============================================================================

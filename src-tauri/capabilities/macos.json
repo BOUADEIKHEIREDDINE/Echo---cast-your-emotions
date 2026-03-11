@@ -3,6 +3,15 @@
     "platforms": ["macOS"],
     "windows": ["main", "recording_overlay"],
     "permissions": [
-        "process:default"
+        "core:default",
+        "core:event:default",
+        "dialog:allow-open",
+        "dialog:allow-save",
+        "clipboard-manager:allow-read-text",
+        "clipboard-manager:allow-write-text",
+        "opener:default",
+        "updater:default",
+        "process:default",
+        "store:default"
     ]
 }

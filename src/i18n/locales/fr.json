@@ -252,6 +252,7 @@
     "Prompt": "Prompt",
     "Prompt exceeds the recommended limit for local models. This may cause context overflow errors.": "Le prompt dépasse la limite recommandée pour les modèles locaux. Cela peut provoquer des erreurs de dépassement de contexte.",
     "Push to talk": "Appuyer pour parler",
+    "Toggle recording": "Basculer l'enregistrement",
     "Reasoning": "Raisonnement",
     "Recent activity": "Activité récente",
     "Recommended": "Recommandé",

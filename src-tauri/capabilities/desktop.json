@@ -2,5 +2,17 @@
     "identifier": "desktop-capability",
     "platforms": ["windows", "linux"],
     "windows": ["main", "recording_overlay"],
-    "permissions": ["autostart:default", "updater:default", "process:default"]
+    "permissions": [
+        "core:default",
+        "core:event:default",
+        "dialog:allow-open",
+        "dialog:allow-save",
+        "clipboard-manager:allow-read-text",
+        "clipboard-manager:allow-write-text",
+        "opener:default",
+        "autostart:default",
+        "updater:default",
+        "process:default",
+        "store:default"
+    ]
 }
