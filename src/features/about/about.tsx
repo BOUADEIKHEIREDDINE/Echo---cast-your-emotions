@@ -40,9 +40,9 @@ const logoVariants = {
 const SUPPORT_LINKS = [
     {
         titleKey: 'Tipeee',
-        descriptionKey: 'Support Murmure with a one-time or recurring tip.',
+        descriptionKey: 'Support Echo with a one-time or recurring tip.',
         href: 'https://fr.tipeee.com/murmure-al1x-ai/',
-        ariaLabel: 'Support Murmure on Tipeee',
+        ariaLabel: 'Support Echo on Tipeee',
         icon: Heart,
         gradient: 'from-rose-500 via-pink-500 to-fuchsia-500',
         glowColor: 'rgba(244, 63, 94, 0.3)',
@@ -55,7 +55,7 @@ const SUPPORT_LINKS = [
         titleKey: 'GitHub Sponsors',
         descriptionKey: 'Sponsor the development directly on GitHub.',
         href: 'https://github.com/sponsors/Kieirra',
-        ariaLabel: 'Sponsor Murmure on GitHub',
+        ariaLabel: 'Sponsor Echo on GitHub',
         icon: Github,
         gradient: 'from-purple-500 via-violet-500 to-indigo-500',
         glowColor: 'rgba(139, 92, 246, 0.3)',
@@ -118,16 +118,16 @@ export const About = () => {
                     variants={sectionVariants}
                     className="w-full space-y-5"
                 >
-                    <div className="text-center space-y-3">
-                        <h2 className="text-xl font-semibold text-foreground tracking-tight">
-                            {t('Help Murmure Grow')}
-                        </h2>
-                        <p className="text-sm text-muted-foreground max-w-sm mx-auto">
-                            {t(
-                                'Murmure is free and open-source. Your support helps keep it alive and improving.'
-                            )}
-                        </p>
-                    </div>
+                            <div className="text-center space-y-3">
+                                <h2 className="text-xl font-semibold text-foreground tracking-tight">
+                                    {t('Help Echo Grow')}
+                                </h2>
+                                <p className="text-sm text-muted-foreground max-w-sm mx-auto">
+                                    {t(
+                                        'Echo is free and open-source. Your support helps keep it alive and improving.'
+                                    )}
+                                </p>
+                            </div>
                     <div className="grid grid-cols-2 gap-4">
                         {SUPPORT_LINKS.map((link) => {
                             const Icon = link.icon;
@@ -179,10 +179,10 @@ export const About = () => {
                     <div className="flex justify-center">
                         <Button variant="outline" size="sm" asChild>
                             <a
-                                href="https://github.com/Kieirra/murmure"
+                                href="https://github.com/BOUADEIKHEIREDDINE/Echo---cast-your-emotions"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                aria-label="View the Murmure project on GitHub"
+                                aria-label="View the Echo project on GitHub"
                             >
                                 <Github />
                                 {t('View on GitHub')}

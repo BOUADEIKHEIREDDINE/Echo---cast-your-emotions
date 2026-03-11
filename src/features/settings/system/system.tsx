@@ -26,7 +26,7 @@ export const System = () => {
                     </Typography.MainTitle>
                     <Typography.Paragraph className="text-muted-foreground">
                         {t(
-                            "Adjust system preferences to control Murmure's behavior at startup and more."
+                            "Adjust system preferences to control Echo's behavior at startup and more."
                         )}
                     </Typography.Paragraph>
                 </Page.Header>

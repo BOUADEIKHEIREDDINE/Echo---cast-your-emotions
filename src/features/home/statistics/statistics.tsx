@@ -37,7 +37,7 @@ export const Statistics = ({
                 <TooltipContent>
                     <Typography.Paragraph className="text-white text-xs max-w-64">
                         {t(
-                            'Your average words per minute with Murmure this month.'
+                            'Your average words per minute with Echo this month.'
                         )}
                         <br />
                         <br />
@@ -61,7 +61,7 @@ export const Statistics = ({
                 </TooltipTrigger>
                 <TooltipContent>
                     <Typography.Paragraph className="text-white text-xs max-w-64">
-                        {t('Total words written with Murmure this month.')}
+                        {t('Total words written with Echo this month.')}
                         <br />
                         <br />
                         {t(
@@ -90,7 +90,7 @@ export const Statistics = ({
                         <br />
                         <br />
                         {t(
-                            'Murmure removes all audio files after processing and only keeps your five latest transcriptions, stored locally on your device.'
+                            'Echo removes all audio files after processing and only keeps your five latest transcriptions, stored locally on your device.'
                         )}
                     </Typography.Paragraph>
                 </TooltipContent>
