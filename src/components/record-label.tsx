@@ -43,7 +43,7 @@ export const RecordLabel = () => {
             <button
                 type="button"
                 onClick={handleToggleClick}
-                className="inline-flex items-center gap-1 rounded-full border border-border bg-secondary text-secondary-foreground hover:bg-accent hover:text-foreground transition-colors px-2 py-1 text-[10px] font-medium"
+                className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-gradient-to-r from-[#667eea] via-[#8b5cf6] to-[#764ba2] text-white hover:from-[#5a67d8] hover:via-[#7c3aed] hover:to-[#6b46c1] transition-colors px-2 py-1 text-[10px] font-medium shadow-[0_10px_25px_rgba(139,92,246,0.35)]"
                 aria-label={t('Toggle recording')}
             >
                 <Mic className={isUiRecording ? 'w-3 h-3 text-red-500' : 'w-3 h-3'} />

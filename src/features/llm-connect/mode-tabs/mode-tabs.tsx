@@ -253,7 +253,7 @@ export const ModeTabs = ({
                                     <Plus className="w-4 h-4" />
                                 </button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-40 bg-background border-border text-foreground">
+                            <DropdownMenuContent className="w-40 border border-border !bg-white text-[#2d3748] shadow-lg">
                                 {getPresetTypes().map((preset) => (
                                     <DropdownMenuItem
                                         key={preset}

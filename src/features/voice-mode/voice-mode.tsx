@@ -58,7 +58,12 @@ export const VoiceMode = () => {
             <div className="space-y-6">
                 <Page.Header>
                     <Typography.MainTitle data-testid="voice-mode-title">
-                        {t('Voice Mode')}
+                        <span className="inline-flex items-baseline gap-2">
+                            <span>{t('Voice Mode')}</span>
+                            <span className="text-sm font-medium text-muted-foreground">
+                                (demo)
+                            </span>
+                        </span>
                     </Typography.MainTitle>
                     <Typography.Paragraph className="text-muted-foreground">
                         {t(

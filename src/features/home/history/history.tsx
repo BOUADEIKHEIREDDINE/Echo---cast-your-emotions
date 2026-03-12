@@ -135,7 +135,21 @@ export const History = () => {
                             }}
                         >
                             <div className="flex items-start justify-between gap-3">
-                                <Typography.Paragraph>
+                                <div className="space-y-2">
+                                    {entry.speakers && entry.speakers.length > 0 ? (
+                                        <div className="flex flex-wrap gap-1.5">
+                                            {entry.speakers.slice(0, 6).map((s) => (
+                                                <span
+                                                    key={s}
+                                                    className="inline-flex items-center rounded-full border border-border bg-muted/40 px-2 py-0.5 text-[11px] font-medium text-muted-foreground"
+                                                >
+                                                    {s}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    ) : null}
+
+                                    <Typography.Paragraph>
                                     {entry.text === '' ? (
                                         <span className="italic text-xs">
                                             {t('(Empty transcription)')}
@@ -148,7 +162,8 @@ export const History = () => {
                                     ) : (
                                         entry.text
                                     )}
-                                </Typography.Paragraph>
+                                    </Typography.Paragraph>
+                                </div>
                                 <Typography.Paragraph className="text-xs block w-20 text-right">
                                     {formatTime(entry.timestamp)}
                                 </Typography.Paragraph>

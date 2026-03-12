@@ -2,6 +2,7 @@ import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface SpeakerListProps {
   speakers: string[];
@@ -16,6 +17,7 @@ export const SpeakerList = ({
   onRenameSpeaker,
   onRemoveSpeaker,
 }: SpeakerListProps) => {
+  const { t } = useTranslation();
   const [newSpeakerName, setNewSpeakerName] = useState('');
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editValue, setEditValue] = useState('');
@@ -43,7 +45,7 @@ export const SpeakerList = ({
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-base font-semibold mb-3 text-foreground">Speakers</h2>
+        <h2 className="text-base font-semibold mb-3 text-foreground">{t('Speakers')}</h2>
         <div className="space-y-2 max-h-[300px] overflow-y-auto">
           {speakers.map((speaker, index) => (
             <div key={`${speaker}-${index}`} className="flex items-center gap-2">
@@ -64,7 +66,7 @@ export const SpeakerList = ({
                     onClick={() => handleEditSave(speaker)}
                     className="whitespace-nowrap"
                   >
-                    Save
+                    {t('Save')}
                   </Button>
                 </div>
               ) : (
@@ -91,7 +93,7 @@ export const SpeakerList = ({
 
       <div className="flex gap-2">
         <Input
-          placeholder="New speaker name..."
+          placeholder={t('New speaker name...')}
           value={newSpeakerName}
           onChange={(e) => setNewSpeakerName(e.target.value)}
           onKeyDown={(e) => {

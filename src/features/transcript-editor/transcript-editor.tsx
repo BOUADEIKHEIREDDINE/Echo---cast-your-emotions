@@ -1,6 +1,7 @@
 import { Button } from '@/components/button';
 import { Download } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SpeakerList } from './speaker-list';
 import type { TranscriptBlock } from './types';
 
@@ -25,6 +26,7 @@ export const TranscriptEditor = ({
   onRemoveSpeaker,
   onDownload,
 }: TranscriptEditorProps) => {
+  const { t } = useTranslation();
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
   const [editText, setEditText] = useState('');
 
@@ -69,7 +71,7 @@ export const TranscriptEditor = ({
         <div className="mt-6 pt-4 border-t border-border">
           <Button onClick={onDownload} className="w-full" size="sm">
             <Download className="w-4 h-4 mr-2" />
-            Download Transcript
+            {t('Download transcript')}
           </Button>
         </div>
       </div>
@@ -79,10 +81,10 @@ export const TranscriptEditor = ({
         {/* Header */}
         <div className="border-b border-border bg-muted/30 px-6 py-4">
           <h1 className="text-xl font-semibold text-foreground">
-            Transcript Editor
+            {t('Transcript editor')}
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Edit your transcription and rename speakers
+            {t('Edit your transcription and rename speakers')}
           </p>
         </div>
 
@@ -91,7 +93,7 @@ export const TranscriptEditor = ({
           <div className="space-y-3 max-w-4xl">
             {blocks.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground">
-                <p className="text-sm">No transcript blocks yet</p>
+                <p className="text-sm">{t('No transcript blocks yet')}</p>
               </div>
             ) : (
               blocks.map((block) => (
@@ -115,7 +117,7 @@ export const TranscriptEditor = ({
 
                     {hasCitation(block.text) ? (
                       <div className="inline-flex items-center rounded-full border border-border bg-muted/40 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
-                        Citation
+                        {t('Citation')}
                       </div>
                     ) : null}
                   </div>
@@ -135,14 +137,14 @@ export const TranscriptEditor = ({
                           size="sm"
                           onClick={() => handleEditSave(block.id)}
                         >
-                          Save
+                          {t('Save')}
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => setEditingBlockId(null)}
                         >
-                          Cancel
+                          {t('Cancel')}
                         </Button>
                       </div>
                     </div>
@@ -151,7 +153,7 @@ export const TranscriptEditor = ({
                       onClick={() => handleEditStart(block)}
                       className="flex-1 text-left px-3 py-2 rounded-md hover:bg-muted border border-transparent text-sm text-foreground whitespace-pre-wrap break-words cursor-text"
                     >
-                      {block.text || '(empty)'}
+                      {block.text || t('(empty)')}
                     </button>
                   )}
                 </div>
@@ -162,11 +164,17 @@ export const TranscriptEditor = ({
 
         {/* Stats Footer */}
         <div className="border-t border-border bg-muted/30 px-6 py-3 text-xs text-muted-foreground">
-          <span>{stats.blocks} blocks</span>
+          <span>
+            {stats.blocks} {t('blocks')}
+          </span>
           <span className="mx-2">•</span>
-          <span>{stats.words} words</span>
+          <span>
+            {stats.words} {t('words')}
+          </span>
           <span className="mx-2">•</span>
-          <span>{stats.chars} characters</span>
+          <span>
+            {stats.chars} {t('characters')}
+          </span>
         </div>
       </div>
     </div>

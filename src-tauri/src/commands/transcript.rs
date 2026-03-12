@@ -10,6 +10,12 @@ use std::sync::Arc;
 use tauri::{command, AppHandle, Manager};
 use uuid::Uuid;
 
+#[command]
+pub fn save_transcript_to_file(file_path: String, content: String) -> Result<(), String> {
+    std::fs::write(&file_path, content).map_err(|e| format!("Failed to save file: {}", e))?;
+    Ok(())
+}
+
 /// Processes an audio file and returns transcript blocks with speaker turns
 /// detected using an LLM-powered diarization pass.
 #[command]

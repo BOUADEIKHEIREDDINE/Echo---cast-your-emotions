@@ -207,7 +207,7 @@ export const CustomDictionary = () => {
                             </Page.SecondaryButton>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
-                            className="w-40 bg-background border-border text-foreground"
+                            className="w-40 border border-border !bg-white text-[#2d3748] shadow-lg"
                             align="end"
                         >
                             <DropdownMenuGroup>

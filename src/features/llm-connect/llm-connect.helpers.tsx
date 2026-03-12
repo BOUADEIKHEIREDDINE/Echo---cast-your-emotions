@@ -56,7 +56,9 @@ export const getPromptByPreset = (
 };
 
 export const getPresetTypes = (): PromptPresetType[] => {
-    return Object.keys(PROMPT_PRESETS) as PromptPresetType[];
+    return Object.keys(PROMPT_PRESETS).filter(
+        (key) => key !== 'typescript' && key !== 'developer'
+    ) as PromptPresetType[];
 };
 
 export const getPresetLabel = (preset: PromptPresetType): string => {
