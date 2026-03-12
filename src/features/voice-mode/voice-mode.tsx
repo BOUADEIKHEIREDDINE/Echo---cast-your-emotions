@@ -58,14 +58,14 @@ export const VoiceMode = () => {
             <div className="space-y-6">
                 <Page.Header>
                     <Typography.MainTitle data-testid="voice-mode-title">
-                        <span className="inline-flex items-baseline gap-2">
+                        <span className="inline-flex items-baseline gap-2 text-white">
                             <span>{t('Voice Mode')}</span>
-                            <span className="text-sm font-medium text-muted-foreground">
+                            <span className="text-sm font-medium text-white/70">
                                 (demo)
                             </span>
                         </span>
                     </Typography.MainTitle>
-                    <Typography.Paragraph className="text-muted-foreground">
+                    <Typography.Paragraph className="text-sm text-white max-w-2xl">
                         {t(
                             'Control Murmure without touching your keyboard. Say a trigger word and let the magic happen.'
                         )}
@@ -82,11 +82,11 @@ export const VoiceMode = () => {
                     >
                         <SettingsUI.Item>
                             <SettingsUI.Description>
-                                <Typography.Title className="flex items-center gap-2">
-                                    <Mic className="w-4 h-4 text-muted-foreground" />
+                                <Typography.Title className="flex items-center gap-2 text-white">
+                                    <Mic className="w-4 h-4 text-white" />
                                     {t('Enable Voice Mode')}
                                 </Typography.Title>
-                                <Typography.Paragraph>
+                                <Typography.Paragraph className="text-sm text-white/80">
                                     {t(
                                         'Listens for your trigger words using voice activity detection (VAD).'
                                     )}

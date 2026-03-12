@@ -22,53 +22,61 @@ export const Home = () => {
     useRecordingNavigation();
 
     return (
-        <main className="space-y-4 relative">
-            <Page.Header>
-                <Typography.MainTitle className="pb-4" data-testid="home-title">
-                    <span className="text-[#2d3748]">{t('Welcome to')}</span>{' '}
-                    <span className="echo-radiant-text text-4xl md:text-5xl font-bold echo-float inline-block">
-                        Echo
-                    </span>
-                </Typography.MainTitle>
-                <Statistics className="absolute -top-4 -right-4" />
-                <Onboarding recordShortcut={recordShortcut} />
-            </Page.Header>
-            <MicDisconnectedBanner />
+        <main className="relative flex h-full flex-col items-center">
+            <div className="mt-20 flex w-full max-w-5xl flex-1 flex-col items-center space-y-6">
+                <Page.Header className="flex flex-col items-center text-center">
+                    <Typography.MainTitle
+                        className="pb-4 flex flex-col items-center"
+                        data-testid="home-title"
+                    >
+                        <span className="text-[#e2e8f0] text-base md:text-lg">
+                            {t('Welcome to')}
+                        </span>
+                        <span className="echo-radiant-text text-4xl md:text-5xl font-bold echo-float inline-block">
+                            Echo
+                        </span>
+                    </Typography.MainTitle>
+                    <Typography.Paragraph className="text-sm text-white max-w-xl">
+                        {t(
+                            'Echo will use its magic on your default microphone to capture your emotions.'
+                        )}
+                    </Typography.Paragraph>
+                </Page.Header>
 
-            <Typography.Paragraph className="text-sm text-muted-foreground">
-                {t(
-                    'Echo will use its magic on your default microphone to capture your emotions.'
-                )}
-            </Typography.Paragraph>
+                <MicDisconnectedBanner />
 
-            <div className="space-y-4">
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="grid w-full max-w-4xl gap-6 md:grid-cols-2">
                     <div className="space-y-2 flex flex-col items-center">
                         <Typography.Title className="echo-radiant-text text-lg">
                             {t('Live input')}
                         </Typography.Title>
-                        <div className="rounded-md border border-border p-2 space-y-4 relative w-full max-w-md">
-                            <div className="relative h-24 w-full">
-                                <div className="absolute left-1/2 top-1/2 w-[80%] -translate-x-1/2 -translate-y-1/2">
-                                    <AudioVisualizer
-                                        bars={30}
-                                        rows={17}
-                                        audioPixelWidth={5}
-                                        audioPixelHeight={4}
-                                    />
+                        <div className="echo-gradient-border w-full max-w-md">
+                            <div className="echo-gradient-border-inner relative flex h-full w-full flex-col items-center gap-4 bg-card p-6">
+                                <div className="relative h-24 w-full">
+                                    <div className="absolute left-1/2 top-1/2 w-[80%] -translate-x-1/2 -translate-y-1/2">
+                                        <AudioVisualizer
+                                            bars={30}
+                                            rows={17}
+                                            audioPixelWidth={5}
+                                            audioPixelHeight={4}
+                                        />
+                                    </div>
                                 </div>
+                                <RecordLabel />
                             </div>
-                            <RecordLabel />
                         </div>
                     </div>
 
                     <FileTranscription />
                 </div>
 
-                <div className="flex justify-center">
+                <div className="flex w-full justify-center">
                     <History />
                 </div>
             </div>
+
+            <Statistics className="absolute right-4 top-0" />
+            <Onboarding recordShortcut={recordShortcut} />
         </main>
     );
 };

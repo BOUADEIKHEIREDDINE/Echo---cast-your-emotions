@@ -16,7 +16,7 @@ export const Statistics = ({
     return (
         <div
             className={clsx(
-                'flex border border-border bg-card rounded-full text-xs space-x-2 px-2',
+                'flex border border-border bg-card rounded-full text-xs space-x-2 px-2 text-black',
                 className
             )}
             {...props}
@@ -29,7 +29,7 @@ export const Statistics = ({
                             height={16}
                             className="text-emerald-400"
                         />
-                        <span>
+                        <span className="font-medium">
                             {wpm} {t('wpm')}
                         </span>
                     </div>
@@ -56,7 +56,9 @@ export const Statistics = ({
                             height={16}
                             className="text-yellow-400"
                         />
-                        {formatWords(words)} {t('words')}
+                        <span className="font-medium">
+                            {formatWords(words)} {t('words')}
+                        </span>
                     </div>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -79,7 +81,7 @@ export const Statistics = ({
                             height={16}
                             className="text-red-400"
                         />
-                        {formatData(data)}
+                        <span className="font-medium">{formatData(data)}</span>
                     </div>
                 </TooltipTrigger>
                 <TooltipContent>

@@ -164,7 +164,7 @@ export const CustomDictionary = () => {
                 <Typography.MainTitle data-testid="dictionary-title">
                     {t('Custom Dictionary')}
                 </Typography.MainTitle>
-                <Typography.Paragraph className="text-muted-foreground">
+                <Typography.Paragraph className="text-sm text-white">
                     {t(
                         'Personalize your Murmure experience by adding technical terms, names, or specialized vocabulary to the dictionary (optimized for both English and French).'
                     )}
@@ -173,10 +173,10 @@ export const CustomDictionary = () => {
 
             <div className="space-y-2 w-full">
                 <Typography.Title className="space-x-2">
-                    <BookText className="w-4 h-4 text-muted-foreground inline-block" />
+                    <BookText className="w-4 h-4 text-white inline-block" />
                     <span>{t('Custom Words')}</span>
                 </Typography.Title>
-                <Typography.Paragraph>
+                <Typography.Paragraph className="text-sm text-white">
                     {t('Add technical terms, names, or specialized vocabulary')}
                 </Typography.Paragraph>
                 <div className="flex items-center gap-2">

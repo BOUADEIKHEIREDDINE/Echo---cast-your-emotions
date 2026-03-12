@@ -148,9 +148,9 @@ export const FormattingRules = () => {
                     <SettingsUI.Container>
                         <SettingsUI.Item>
                             <SettingsUI.Description className="w-150">
-                                <Typography.Title>
+                                <h2 className="text-sm font-semibold text-[#9B7FE8]">
                                     {t('Short text correction')}
-                                </Typography.Title>
+                                </h2>
                                 <Typography.Paragraph>
                                     {shortTextThreshold > 0
                                         ? (
@@ -191,9 +191,9 @@ export const FormattingRules = () => {
                     <SettingsUI.Container>
                         <SettingsUI.Item>
                             <SettingsUI.Description className="w-150">
-                                <Typography.Title>
+                                <h2 className="text-sm font-semibold text-[#9B7FE8]">
                                     {t('Add space before ? and !')}
-                                </Typography.Title>
+                                </h2>
                                 <Typography.Paragraph>
                                     {t(
                                         'Automatically adds a space before question marks and exclamation points if missing.'
@@ -222,9 +222,9 @@ export const FormattingRules = () => {
                     <SettingsUI.Container>
                         <SettingsUI.Item>
                             <SettingsUI.Description className="w-150">
-                                <Typography.Title>
+                                <h2 className="text-sm font-semibold text-[#9B7FE8]">
                                     {t('Add space at end of transcription')}
-                                </Typography.Title>
+                                </h2>
                                 <Typography.Paragraph>
                                     {t(
                                         'Ensures each transcription ends with a space. Prevents consecutive transcriptions from "sticking" together.'
@@ -247,9 +247,9 @@ export const FormattingRules = () => {
                     <SettingsUI.Container>
                         <SettingsUI.Item>
                             <SettingsUI.Description className="w-150">
-                                <Typography.Title>
+                                <h2 className="text-sm font-semibold text-[#9B7FE8]">
                                     {t('Convert text numbers to digits')}
-                                </Typography.Title>
+                                </h2>
                                 <Typography.Paragraph>
                                     {t(
                                         'Automatically converts numbers written in letters to digits.'

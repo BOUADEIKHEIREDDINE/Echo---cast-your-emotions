@@ -8,7 +8,10 @@ export const Typography = {
     }: React.HTMLAttributes<HTMLHeadingElement>) => {
         return (
             <h1
-                className={clsx('text-2xl font-semibold mb-4', className)}
+                className={clsx(
+                    'text-2xl font-semibold mb-4 echo-radiant-text',
+                    className
+                )}
                 {...props}
             >
                 {children}
@@ -23,7 +26,7 @@ export const Typography = {
     }: React.HTMLAttributes<HTMLHeadingElement>) => {
         return (
             <h2
-                className={clsx('font-medium text-white', className)}
+                className={clsx('font-semibold echo-radiant-text', className)}
                 {...props}
             >
                 {children}

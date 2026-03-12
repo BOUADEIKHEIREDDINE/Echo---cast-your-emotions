@@ -77,29 +77,29 @@
 }
 
 .dark {
-    /* Overall foreground on light cards */
-    --foreground: #2d3748;
+    /* Overall foreground */
+    --foreground: #e8e8f0;
 
     /* Main surfaces */
     --background: transparent;
-    --card: #ffffff;
-    --card-foreground: #2d3748;
-    --popover: #ffffff;
-    --popover-foreground: #2d3748;
+    --card: #111827;
+    --card-foreground: #e8e8f0;
+    --popover: #111827;
+    --popover-foreground: #e8e8f0;
 
     /* Primary / CTA colors (indigo → purple family) */
     --primary: #667eea;
     --primary-foreground: #ffffff;
 
     /* Secondary / neutral panels */
-    --secondary: #f8fafc; /* light panel backgrounds */
-    --secondary-foreground: #4a5568;
-    --muted: #f8fafc;
-    --muted-foreground: #718096;
+    --secondary: #1e2235;
+    --secondary-foreground: #e8e8f0;
+    --muted: #1e2235;
+    --muted-foreground: #8b8faa;
 
     /* Accent surfaces (e.g. file info band) */
-    --accent: #f0f4ff;
-    --accent-foreground: #2d3748;
+    --accent: #252a3d;
+    --accent-foreground: #e8e8f0;
 
     /* Error / destructive */
     --destructive: #c53030;
@@ -109,14 +109,14 @@
     --input: #e2e8f0;
     --ring: #667eea;
 
-    /* Sidebar palette (slightly darker overlay on gradient) */
-    --sidebar: rgba(15, 23, 42, 0.9);
-    --sidebar-foreground: #edf2f7;
+    /* Sidebar palette */
+    --sidebar: #1e2235;
+    --sidebar-foreground: #e8e8f0;
     --sidebar-primary: #667eea;
     --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: rgba(15, 23, 42, 0.9);
-    --sidebar-accent-foreground: #edf2f7;
-    --sidebar-border: rgba(15, 23, 42, 0.6);
+    --sidebar-accent: #252a3d;
+    --sidebar-accent-foreground: #e8e8f0;
+    --sidebar-border: #2e3450;
     --sidebar-ring: #667eea;
 
     /* Charts: keep a pleasant mix but closer to brand */
@@ -196,13 +196,44 @@
         opacity: 0.6;
     }
 
+    @keyframes aurora {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
     .echo-radiant-text {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(
+            135deg,
+            #9b7fe8,
+            #5bc8dc,
+            #7c5cbf,
+            #5bc8dc
+        );
+        background-size: 300% 300%;
+        animation: aurora 4s ease infinite;
         -webkit-background-clip: text;
         background-clip: text;
+        -webkit-text-fill-color: transparent;
         color: transparent;
-        filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.35))
-            drop-shadow(0 8px 20px rgba(102, 126, 234, 0.25));
+    }
+
+    .echo-gradient-border {
+        position: relative;
+        border-radius: 0.75rem;
+        padding: 1px;
+        background: linear-gradient(135deg, #9b7fe8, #5bc8dc);
+    }
+
+    .echo-gradient-border-inner {
+        border-radius: 0.75rem;
+        background: #252a3d;
     }
 
     .echo-float {

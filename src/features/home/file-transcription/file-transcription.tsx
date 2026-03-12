@@ -51,22 +51,24 @@ export const FileTranscription = () => {
             <Typography.Title className="echo-radiant-text text-lg">
                 {t('Transcribe an audio file')}
             </Typography.Title>
-            <div className="rounded-md border border-border p-6 flex flex-col items-center gap-4 w-full max-w-md">
-                <Typography.Paragraph className="text-center text-muted-foreground">
-                    {t(
-                        'Choose a local WAV file to transcribe it with the same pipeline as live input.'
-                    )}
-                </Typography.Paragraph>
-                <Button
-                    onClick={handleSelectFile}
-                    disabled={isTranscribing}
-                    className="gap-2"
-                >
-                    <Upload className="w-4 h-4" />
-                    {isTranscribing
-                        ? t('Transcribing...')
-                        : t('Select an audio file (.wav)')}
-                </Button>
+            <div className="echo-gradient-border w-full max-w-md h-full">
+                <div className="echo-gradient-border-inner rounded-xl bg-card p-6 flex flex-col items-center gap-4 w-full h-full">
+                    <Typography.Paragraph className="text-center text-muted-foreground">
+                        {t(
+                            'Choose a local WAV file to transcribe it with the same pipeline as live input.'
+                        )}
+                    </Typography.Paragraph>
+                    <Button
+                        onClick={handleSelectFile}
+                        disabled={isTranscribing}
+                        className="gap-2 bg-gradient-to-r from-[#9B7FE8] via-[#5BC8DC] to-[#7C5CBF] text-white hover:from-[#8a6fe0] hover:via-[#4fb7cc] hover:to-[#6d4bb8] border-0"
+                    >
+                        <Upload className="w-4 h-4" />
+                        {isTranscribing
+                            ? t('Transcribing...')
+                            : t('Select an audio file (.wav)')}
+                    </Button>
+                </div>
             </div>
         </div>
     );

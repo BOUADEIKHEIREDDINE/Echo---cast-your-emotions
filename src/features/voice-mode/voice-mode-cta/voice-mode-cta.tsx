@@ -33,7 +33,7 @@ export const VoiceModeCta = () => {
             data-testid="voice-mode-cta"
             className="flex flex-col items-center text-center gap-6 py-4"
         >
-            <h2 className="text-sm font-bold uppercase tracking-[0.25em] text-foreground">
+            <h2 className="text-sm font-bold uppercase tracking-[0.25em] text-white">
                 {t('Why enable it?')}
             </h2>
 
@@ -41,22 +41,24 @@ export const VoiceModeCta = () => {
                 {benefits.map((benefit) => (
                     <div
                         key={benefit.title}
-                        className="bg-card/30 border border-border p-5 rounded-xl space-y-3"
+                        className="echo-gradient-border rounded-xl p-[1px] space-y-3"
                     >
-                        <div className="flex items-center justify-center">
-                            <benefit.icon className="w-6 h-6 text-sky-400" />
+                        <div className="echo-gradient-border-inner bg-card/30 border border-border p-5 rounded-xl space-y-3">
+                            <div className="flex items-center justify-center">
+                                <benefit.icon className="w-6 h-6 text-sky-400" />
+                            </div>
+                            <h3 className="font-semibold text-white text-sm">
+                                {benefit.title}
+                            </h3>
+                            <p className="text-sm text-white/80 leading-relaxed text-left">
+                                {benefit.description}
+                            </p>
                         </div>
-                        <h3 className="font-semibold text-foreground text-sm">
-                            {benefit.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed text-left">
-                            {benefit.description}
-                        </p>
                     </div>
                 ))}
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="flex items-center gap-2 text-xs text-white/80">
                 <Lock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 {t(
                     '100% on-device privacy. Listens locally to detect your voice, but audio is never saved or sent anywhere.'
