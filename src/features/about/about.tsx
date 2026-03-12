@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
-import { Heart, Github, ExternalLink as ExternalLinkIcon } from 'lucide-react';
+import { Github, ExternalLink as ExternalLinkIcon, Zap } from 'lucide-react';
 import StarryBackground from './starry-background/starry-background';
-import { Button } from '@/components/button';
 import { ExternalLink } from '@/components/external-link';
 import { useGetVersion } from '../layout/hooks/use-get-version';
 import { useTranslation } from '@/i18n';
@@ -37,25 +36,12 @@ const logoVariants = {
     },
 };
 
-const SUPPORT_LINKS = [
+const FEATURE_LINKS = [
     {
-        titleKey: 'Tipeee',
-        descriptionKey: 'Support Echo with a one-time or recurring tip.',
-        href: 'https://fr.tipeee.com/murmure-al1x-ai/',
-        ariaLabel: 'Support Echo on Tipeee',
-        icon: Heart,
-        gradient: 'from-rose-500 via-pink-500 to-fuchsia-500',
-        glowColor: 'rgba(244, 63, 94, 0.3)',
-        hoverGlow: 'rgba(244, 63, 94, 0.15)',
-        iconColor: 'text-rose-400',
-        borderHover: 'hover:border-rose-500/50',
-        iconBg: 'rgba(244, 63, 94, 0.15)',
-    },
-    {
-        titleKey: 'GitHub Sponsors',
-        descriptionKey: 'Sponsor the development directly on GitHub.',
-        href: 'https://github.com/sponsors/Kieirra',
-        ariaLabel: 'Sponsor Echo on GitHub',
+        titleKey: 'GitHub',
+        descriptionKey: 'View the source code and contribute to the project.',
+        href: 'https://github.com/BOUADEIKHEIREDDINE/Echo---cast-your-emotions',
+        ariaLabel: 'View Echo on GitHub',
         icon: Github,
         gradient: 'from-purple-500 via-violet-500 to-indigo-500',
         glowColor: 'rgba(139, 92, 246, 0.3)',
@@ -63,6 +49,19 @@ const SUPPORT_LINKS = [
         iconColor: 'text-violet-400',
         borderHover: 'hover:border-violet-500/50',
         iconBg: 'rgba(139, 92, 246, 0.15)',
+    },
+    {
+        titleKey: 'Features',
+        descriptionKey: 'Privacy-first, local speech recognition.',
+        href: '#',
+        ariaLabel: 'Echo features',
+        icon: Zap,
+        gradient: 'from-yellow-500 via-amber-500 to-orange-500',
+        glowColor: 'rgba(245, 158, 11, 0.3)',
+        hoverGlow: 'rgba(245, 158, 11, 0.15)',
+        iconColor: 'text-amber-400',
+        borderHover: 'hover:border-amber-500/50',
+        iconBg: 'rgba(245, 158, 11, 0.15)',
     },
 ];
 
@@ -103,11 +102,11 @@ export const About = () => {
                             }}
                         >
                             <span className="text-sky-400">
-                                {t('Murmure')}
+                                Echo
                             </span>
                         </h1>
                     </div>
-                    <p className="italic text-sm text-muted-foreground">
+                    <p className="italic text-sm text-muted-foreground max-w-sm">
                         {t('Private by design.')}
                         <br />
                         {t('Speech recognition that stays on your device.')}
@@ -118,18 +117,17 @@ export const About = () => {
                     variants={sectionVariants}
                     className="w-full space-y-5"
                 >
-                            <div className="text-center space-y-3">
-                                <h2 className="text-xl font-semibold text-foreground tracking-tight">
-                                    {t('Help Echo Grow')}
-                                </h2>
-                                <p className="text-sm text-muted-foreground max-w-sm mx-auto">
-                                    {t(
-                                        'Echo is free and open-source. Your support helps keep it alive and improving.'
-                                    )}
-                                </p>
-                            </div>
+                    <div className="text-center space-y-3">
+                        <h2 className="text-xl font-semibold text-foreground tracking-tight">
+                            {t('Cast Your Emotions')}
+                        </h2>
+                        <p className="text-sm text-muted-foreground max-w-sm mx-auto">
+                            Echo converts your voice into text with precision. Everything stays on your device—no data collection, no tracking, just pure transcription power.
+                        </p>
+                    </div>
+
                     <div className="grid grid-cols-2 gap-4">
-                        {SUPPORT_LINKS.map((link) => {
+                        {FEATURE_LINKS.map((link) => {
                             const Icon = link.icon;
                             return (
                                 <motion.a
@@ -168,26 +166,12 @@ export const About = () => {
                                             boxShadow: `0 4px 15px ${link.glowColor}`,
                                         }}
                                     >
-                                        <Heart className="w-3 h-3" />
-                                        {t('Support')}
+                                        <Zap className="w-3 h-3" />
+                                        {t('Open')}
                                     </span>
                                 </motion.a>
                             );
                         })}
-                    </div>
-
-                    <div className="flex justify-center">
-                        <Button variant="outline" size="sm" asChild>
-                            <a
-                                href="https://github.com/BOUADEIKHEIREDDINE/Echo---cast-your-emotions"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="View the Echo project on GitHub"
-                            >
-                                <Github />
-                                {t('View on GitHub')}
-                            </a>
-                        </Button>
                     </div>
                 </motion.div>
 
@@ -216,14 +200,8 @@ export const About = () => {
                             {t('GNU AGPL v3')}
                         </ExternalLink>
                     </p>
-                    <ExternalLink
-                        href="https://www.murmure.app"
-                        className="!text-sky-400/70 hover:!text-sky-400 text-xs"
-                    >
-                        www.murmure.app
-                    </ExternalLink>
                     <p className="text-xs text-muted-foreground">
-                        &copy; {yearDisplay} Al1x-ai. All rights reserved.
+                        &copy; {yearDisplay} BOUADEI KHEIREDDINE. All rights reserved.
                     </p>
                 </motion.div>
             </motion.div>
