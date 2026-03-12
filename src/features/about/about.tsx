@@ -53,7 +53,7 @@ const FEATURE_LINKS = [
     {
         titleKey: 'Features',
         descriptionKey: 'Privacy-first, local speech recognition.',
-        href: '#',
+        href: './personalize/llm-connect',
         ariaLabel: 'Echo features',
         icon: Zap,
         gradient: 'from-yellow-500 via-amber-500 to-orange-500',
@@ -122,7 +122,7 @@ export const About = () => {
                             {t('Cast Your Emotions')}
                         </h2>
                         <p className="text-sm text-muted-foreground max-w-sm mx-auto">
-                            Echo converts your voice into text with precision. Everything stays on your device—no data collection, no tracking, just pure transcription power.
+                            Echo convertit votre voix en texte avec précision. Tout reste en local, pas de collecte de données, pas de suivi, simplement le pouvoir de la transcription.
                         </p>
                     </div>
 
